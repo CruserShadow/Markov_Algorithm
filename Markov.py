@@ -1,6 +1,6 @@
 import json
 
-with open("Rules", "r") as file:
+with open("Rules.json", "r") as file:
     rules = json.load(file)
 
 list_of_checkwords = list(rules.keys())  # проверяемые
