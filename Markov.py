@@ -1,6 +1,6 @@
 import json
 
-with open("TA_rules", "r") as file:
+with open("Rules", "r") as file:
     rules = json.load(file)
 
 list_of_checkwords = list(rules.keys())  # проверяемые
