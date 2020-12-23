@@ -1,55 +1,45 @@
 import json
+import re
 
 with open("Rules.json", "r") as file:
-    rules = json.load(file)
+    rules = [x for x in json.load(file).items()]
 
-list_of_checkwords = list(rules.keys())  # проверяемые
-list_of_changewords = list(rules.values())  # заменяемые
-kolvo_pravil = len(list_of_checkwords)
+count = len(rules)
+check = [i[0] for i in rules]
+change = [i[1] for i in rules]
 
-# ввод
-word = input("Слово -> ")
-
-for i in range(0, kolvo_pravil):
-    print(f"{list_of_checkwords[i]} -> {list_of_changewords[i]}")
+for i in range(0, count):
+    print(f"{check[i]} -> {change[i]}")
 print()
 
+word = input("Word -> ")
 print(f"> {word} <")
 
 #  переменные для цикла while
 i = 0
 loops = 0
-end = False
 
-while i < len(list_of_changewords):
+while i < count:
     restart = False
 
-    for q in range(0, len(word)):  # q - номер символа в строке
+    if check[i] in word:
 
-        if word[q:q + len(list_of_checkwords[i])] == list_of_checkwords[i]:  # проверка подстроки на соответсвие правилу
-
-            if "." in list_of_changewords[i]:   # проверка на наличие точки в правиле
-                list_of_changewords[i] = list_of_changewords[i].replace(".", "", 1)
-                end = True
-
-            word = word[:q] + list_of_changewords[i] + word[q + len(list_of_checkwords[i]):]  # замена подстроки
-            #  word = word.replace(list_of_checkwords[i], list_of_changewords[i],1)
-
-            restart = True
-            loops += 1
-            i = 0
+        if "." in change[i]:
+            change[i] = change[i].replace(".", "")
+            word = re.sub(check[i], change[i], word, 1)
             print(word)
             break
 
-    if end:
-        break
+        word = re.sub(check[i], change[i], word, 1)
+        restart = True
+        loops += 1
+        print(word)
 
     if loops == 100:
-        print(f"Rule has infinite cycle {list_of_checkwords[i]} -> {list_of_changewords[i]} / completed {loops} times")
-        del list_of_changewords[i]
-        del list_of_checkwords[i]
-        loops = 0
+        print(f"Rule has infinite cycle {check[i]} -> {change[i]} | completed {loops} times")
         break
 
-    if i < kolvo_pravil and restart is False:
+    if restart is True:
+        i = 0
+    elif restart is False:
         i += 1
