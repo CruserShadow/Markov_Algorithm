@@ -19,6 +19,7 @@ print(f"> {word} <")
 i = 0
 loops = 0
 
+
 while i < count:
     restart = False
 
