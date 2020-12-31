@@ -2,22 +2,28 @@ import json
 import re
 
 with open("Rules.json", "r") as file:
-    rules = [json.load(file)]
+    raw_rules = json.load(file).get("rules")
 
-for key, item in rules[0].items():
+letters = []
+for atr in raw_rules:
+    letters.append([atr.get(x) for x in atr])
+
+rule = dict(letters)
+
+for key, item in rule.items():
     print(f"{key} -> {item}")
-print()
+
 
 word = input("Word -> ")
 print(f"> {word} <")
+
 
 #  переменные для цикла
 end = False
 
 for loops in range(150):
 
-    for check, change in rules[0].items():
-
+    for check, change in rule.items():
         if check in word:
             if "." in change:
                 change = change.replace(".", "")

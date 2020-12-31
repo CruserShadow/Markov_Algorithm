@@ -1,5 +1,16 @@
 {
-   "ba":"ab",
-   "cb": "bc",
-   "ca":"ac"
+   "rules": [
+      {
+         "what": "ba",
+         "with": "ab"
+      },
+      {
+         "what":"cb",
+         "with": "bc"
+      },
+      {
+         "what": "ca",
+         "with": "ac"
+      }
+   ]
 }
